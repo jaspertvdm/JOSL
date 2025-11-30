@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOSL - Jasper Open Standard License v1.0</title>
+    <meta name="description" content="JOSL: Open source license for JIS, Humotica, and BETTI. Free to use, implement, and integrate. Attribution required.">
+    <meta name="author" content="Jasper van de Meent">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6A5BFF;
+            --accent: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --bg-dark: #0A0E1A;
+            --bg-mid: #0F1629;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text); line-height: 1.8; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(10, 14, 26, 0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 2rem;
+        }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; }
+        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.1); }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; padding: 10px; gap: 5px; }
+        .hamburger span { width: 28px; height: 3px; background: var(--text); border-radius: 3px; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: rgba(10,14,26,0.98); padding: 1rem; gap: 0.5rem; }
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: 1rem; text-align: center; background: rgba(255,255,255,0.05); }
+            .hero { padding: 6rem 1rem 3rem; }
+            .hero h1 { font-size: 2rem; }
+            .container { padding: 0 1rem; }
+        }
+
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(106, 91, 255, 0.1) 0%, transparent 60%);
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero .version { color: var(--accent); font-size: 1.2rem; margin-bottom: 1rem; }
+        .hero p { color: var(--text-muted); font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+
+        .section { padding: 3rem 0; }
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .license-box {
+            background: var(--bg-mid);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary);
+        }
+        .license-box.permissions { border-left-color: var(--accent); }
+        .license-box.requirements { border-left-color: var(--warning); }
+        .license-box.prohibitions { border-left-color: var(--danger); }
+
+        .license-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .license-box.permissions h3 { color: var(--accent); }
+        .license-box.requirements h3 { color: var(--warning); }
+        .license-box.prohibitions h3 { color: var(--danger); }
+
+        .license-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .license-box li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .license-box li::before {
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+        .license-box.permissions li::before { content: "✓"; color: var(--accent); }
+        .license-box.requirements li::before { content: "!"; color: var(--warning); font-weight: bold; }
+        .license-box.prohibitions li::before { content: "✗"; color: var(--danger); }
+
+        .attribution-example {
+            background: #0D1117;
+            border: 1px solid rgba(106, 91, 255, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Monaco', monospace;
+            font-size: 0.95rem;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .applies-to {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+        .applies-tag {
+            background: rgba(106, 91, 255, 0.15);
+            border: 1px solid rgba(106, 91, 255, 0.3);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: var(--bg-mid);
+            border-radius: 16px;
+            margin: 3rem 0;
+        }
+        .cta-section h2 { margin-bottom: 1rem; }
+        .cta-section p { color: var(--text-muted); margin-bottom: 1.5rem; }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 0.5rem;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+        footer a { color: var(--primary); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">JOSL</a>
+            <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('active')">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="https://humotica.com">Humotica</a>
+                <a href="https://jis.humotica.com">JIS</a>
+                <a href="https://betti.humotica.com">BETTI</a>
+                <a href="https://josl.humotica.com">License</a>
+                <a href="https://github.com/jaspertvdm/JTel-identity-standard">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>JOSL</h1>
+        <div class="version">Jasper Open Standard License v1.0</div>
+        <p>Open for everyone. Protected from fragmentation. One standard, unified evolution.</p>
+    </section>
+
+    <div class="container">
+        <section class="section">
+            <h2 class="section-title">📋 This License Applies To</h2>
+            <div class="applies-to">
+                <span class="applies-tag">JIS (JTel Identity Standard)</span>
+                <span class="applies-tag">Humotica</span>
+                <span class="applies-tag">BETTI</span>
+                <span class="applies-tag">TIBET</span>
+                <span class="applies-tag">FIR/A</span>
+                <span class="applies-tag">SNAFT</span>
+                <span class="applies-tag">BALANS</span>
+                <span class="applies-tag">NIR</span>
+                <span class="applies-tag">HICSS</span>
+                <span class="applies-tag">HID/DID</span>
+                <span class="applies-tag">All Documentation</span>
+                <span class="applies-tag">Reference Implementations</span>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">🎯 Purpose</h2>
+            <p style="color: var(--text-muted);">
+                JOSL enables <strong>free use, study, and implementation</strong> of the JTel Identity Standard while maintaining:
+            </p>
+            <ul style="color: var(--text-muted); margin: 1rem 0 0 1.5rem;">
+                <li>The <strong>integrity</strong> of the standard</li>
+                <li>The <strong>authorship</strong> of its creator</li>
+                <li>A <strong>unified and consistent evolution</strong> of the specification</li>
+            </ul>
+            <p style="color: var(--text-muted); margin-top: 1rem;">
+                JOSL ensures JIS remains an <strong>open standard</strong> without fragmenting into competing variants.
+            </p>
+        </section>
+
+        <section class="section">
+            <div class="license-box permissions">
+                <h3>✓ Permissions (You May)</h3>
+                <ul>
+                    <li><strong>Use</strong> — Read, study, and reference the specifications</li>
+                    <li><strong>Implement</strong> — Build in open-source software, commercial products, IoT devices, robotics, telecom, identity frameworks, operating systems</li>
+                    <li><strong>Integrate</strong> — Layer JIS on top of existing protocols (SIP, HTTP, MQTT, Matrix, WebRTC, etc.)</li>
+                    <li><strong>Extend</strong> — Propose extensions through the official JIS RFC process</li>
+                    <li><strong>Commercialize</strong> — Build and sell products using JIS</li>
+                </ul>
+            </div>
+
+            <div class="license-box requirements">
+                <h3>! Requirements (You Must)</h3>
+                <ul>
+                    <li><strong>Attribution</strong> — Display the required attribution (see below)</li>
+                    <li><strong>Preserve Naming</strong> — Do not rename the standard or publish forks as "official"</li>
+                    <li><strong>Preserve License</strong> — Keep the JOSL text intact and included</li>
+                    <li><strong>Declare Non-Conformance</strong> — If your implementation deviates, state it clearly</li>
+                </ul>
+            </div>
+
+            <div class="license-box prohibitions">
+                <h3>✗ Prohibitions (You May Not)</h3>
+                <ul>
+                    <li><strong>Claim Ownership</strong> — You cannot claim to own the JIS specification</li>
+                    <li><strong>Privatize</strong> — You cannot relicense or close-source any part of JIS</li>
+                    <li><strong>Mislead</strong> — You cannot publish incompatible derivatives as "JIS"</li>
+                    <li><strong>Remove Authorship</strong> — You cannot change or hide the origin</li>
+                    <li><strong>Create Competing Governance</strong> — You cannot create alternative "official JIS" organizations</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">📝 Required Attribution</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                When using or implementing JIS, you must clearly display:
+            </p>
+            <div class="attribution-example">
+                "Powered by JIS (JTel Identity Standard), authored by Jasper van de Meent."
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">⚠️ Non-Conformance Declaration</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                If your implementation deviates from the official spec, you must state:
+            </p>
+            <div class="attribution-example">
+                "This implementation is not fully conformant with the official JIS standard."
+            </div>
+        </section>
+
+        <div class="cta-section">
+            <h2>Ready to Build?</h2>
+            <p>JIS is open for everyone. Start implementing today.</p>
+            <a href="https://github.com/jaspertvdm/JTel-identity-standard" class="btn">View on GitHub</a>
+            <a href="https://jis.humotica.com" class="btn btn-outline">Read the Protocol</a>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">👤 Author</h2>
+            <p style="color: var(--text-muted);">
+                <strong>Jasper van de Meent</strong><br>
+                JTel Systems<br>
+                <a href="mailto:jtmeent@gmail.com">jtmeent@gmail.com</a><br><br>
+                Year: 2025<br>
+                Status: Active
+            </p>
+        </section>
+    </div>
+
+    <footer>
+        <p>
+            <strong>JOSL v1.0</strong> — Jasper Open Standard License<br><br>
+            <a href="https://humotica.com">Humotica</a> •
+            <a href="https://jis.humotica.com">JIS Protocol</a> •
+            <a href="https://betti.humotica.com">BETTI</a> •
+            <a href="https://jis.jtel.nl">jis.jtel.nl</a><br><br>
+            <a href="https://zenodo.org/records/17759713">DOI: 10.5281/zenodo.17759713</a>
+        </p>
+    </footer>
+</body>
+</html>
